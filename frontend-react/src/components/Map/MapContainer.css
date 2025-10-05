@@ -1,0 +1,33 @@
+/* Map Container Styles */
+.selection-mode {
+  cursor: crosshair !important;
+}
+
+.selection-mode * {
+  cursor: crosshair !important;
+}
+
+.selection-mode .leaflet-container {
+  cursor: crosshair !important;
+}
+
+.selection-mode .leaflet-map-pane {
+  cursor: crosshair !important;
+}
+
+.selection-mode .leaflet-tile-pane {
+  cursor: crosshair !important;
+}
+
+.selection-mode .leaflet-overlay-pane {
+  cursor: crosshair !important;
+}
+
+/* Ensure Leaflet controls are disabled in selection mode */
+.selection-mode .leaflet-control-zoom {
+  pointer-events: none;
+}
+
+.selection-mode .leaflet-control-attribution {
+  pointer-events: none;
+}

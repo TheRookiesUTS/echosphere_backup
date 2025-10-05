@@ -1,0 +1,18 @@
+﻿# FastAPI Requirements for Linux (Latest Versions)
+# Usage: pip install -r requirements/linux.txt
+
+# Core FastAPI
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+
+# External API clients
+httpx
+openai
+
+# Utilities
+python-dotenv
+
+# Note: No version pins - installs latest compatible versions
+# uvicorn[standard] includes uvloop for better performance on Linux

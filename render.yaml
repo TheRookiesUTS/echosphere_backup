@@ -1,0 +1,99 @@
+# Render.com Blueprint for EchoSphere
+# Deploys: PostgreSQL + Backend API + Frontend
+# Free tier optimized configuration
+
+services:
+  # Backend FastAPI Service
+  - type: web
+    name: echosphere-backend
+    env: python
+    region: oregon  # Choose: oregon, frankfurt, singapore
+    plan: free  # or starter/standard for production
+    
+    buildCommand: |
+      pip install -r backend/requirements/linux.txt
+      pip install -r backend/requirements/database.txt
+      cd backend && alembic upgrade head
+    
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1
+    
+    healthCheckPath: /api/health
+    
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13"
+      
+      - key: DATABASE_URL
+        fromDatabase:
+          name: echosphere-db
+          property: connectionString
+      
+      - key: OPENROUTER_API_KEY
+        sync: false  # Set manually in Render dashboard
+      
+      - key: NASA_API_KEY
+        sync: false  # Set manually in Render dashboard
+      
+      - key: FRONTEND_URL
+        value: https://echosphere-frontend.onrender.com  # Update with your frontend URL
+      
+      - key: BACKEND_URL
+        value: https://echosphere-backend.onrender.com  # Update with your backend URL
+      
+      # Database pool settings (optimized for free tier)
+      - key: DB_POOL_SIZE
+        value: "5"
+      
+      - key: DB_MAX_OVERFLOW
+        value: "2"
+      
+      # Cache settings
+      - key: NASA_CACHE_TTL
+        value: "3600"  # 1 hour
+  
+  # Frontend Static Site (Optional - if deploying React separately)
+  - type: web
+    name: echosphere-frontend
+    env: static
+    region: oregon
+    plan: free
+    
+    buildCommand: |
+      cd frontend-react
+      npm install
+      npm run build
+    
+    staticPublishPath: frontend-react/dist
+    
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    
+    envVars:
+      - key: VITE_API_URL
+        value: https://echosphere-backend.onrender.com
+
+# Database
+databases:
+  - name: echosphere-db
+    databaseName: echosphere_db
+    user: echosphere
+    plan: free  # Free tier: 1GB storage, 97 connections
+    region: oregon  # Same as backend for low latency
+    
+    # PostGIS will be enabled via init script
+    postgresMajorVersion: "15"
+
+# Background Workers (Optional - for cache cleanup, etc.)
+# - type: worker
+#   name: echosphere-worker
+#   env: python
+#   buildCommand: pip install -r backend/requirements/linux.txt -r backend/requirements/database.txt
+#   startCommand: cd backend && python -c "from app.database import cleanup_expired_cache; import time; [cleanup_expired_cache() or time.sleep(3600) for _ in iter(int, 1)]"
+#   envVars:
+#     - key: DATABASE_URL
+#       fromDatabase:
+#         name: echosphere-db
+#         property: connectionString
+

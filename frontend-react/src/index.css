@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar styles */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-white/10 rounded;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-white/30 rounded hover:bg-white/50;
+  }
+}
+
+/* Leaflet override styles */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 15px;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply bg-gray-900 text-white rounded-lg;
+}
+
+.leaflet-popup-tip {
+  @apply bg-gray-900;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out;
+}
+

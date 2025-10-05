@@ -1,0 +1,16 @@
+# Database Dependencies for EchoSphere
+# PostgreSQL + PostGIS + SQLAlchemy
+
+# Core database
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.9  # PostgreSQL adapter (binary for easy install)
+alembic>=1.13.0  # Database migrations
+
+# PostGIS support
+geoalchemy2>=0.14.0  # PostGIS/geospatial support for SQLAlchemy
+shapely>=2.0.0  # Geometry operations and manipulation
+
+# Connection pooling and utilities
+psycopg2>=2.9.9  # PostgreSQL adapter (source version for production)
+greenlet>=3.0.0  # Required by SQLAlchemy for async support
+

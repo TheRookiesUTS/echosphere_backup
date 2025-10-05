@@ -1,0 +1,18 @@
+﻿# FastAPI Requirements for Windows (Latest Versions)
+# Usage: pip install -r requirements/windows.txt
+
+# Core FastAPI
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+
+# External API clients
+httpx
+openai
+
+# Utilities
+python-dotenv
+
+# Note: No version pins - installs latest compatible versions
+# This ensures Windows-specific binary wheels are automatically selected
