@@ -55,7 +55,6 @@ services:
   - type: web
     name: echosphere-frontend
     env: static
-    plan: free
     
     buildCommand: |
       cd frontend-react
