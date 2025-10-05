@@ -57,7 +57,7 @@ class User(Base):
     email = Column(String(255), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     last_active = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    status = Column(SQLEnum(SessionStatus), default=SessionStatus.ACTIVE)
+    status = Column(SQLEnum(SessionStatus, create_type=False, native_enum=False), default=SessionStatus.ACTIVE)
     preferences = Column(JSON, default={})  # User preferences (theme, default city, etc.)
     
     # Relationships
@@ -127,7 +127,7 @@ class EnvironmentalMetric(Base):
     # Urban metrics
     green_coverage = Column(Float, nullable=False)  # Percentage
     water_stress = Column(Float, nullable=True)  # Percentage
-    flood_risk = Column(SQLEnum(FloodRiskLevel), nullable=False)
+    flood_risk = Column(SQLEnum(FloodRiskLevel, create_type=False, native_enum=False), nullable=False)
     
     # Population & infrastructure
     population_estimate = Column(Integer, nullable=True)
@@ -163,7 +163,7 @@ class AreaAnalysis(Base):
     # Analysis content
     analysis_text = Column(Text, nullable=False)  # Full markdown analysis
     summary = Column(JSON, nullable=False)  # Structured summary with issues/recommendations
-    priority_level = Column(SQLEnum(PriorityLevel), nullable=False)
+    priority_level = Column(SQLEnum(PriorityLevel, create_type=False, native_enum=False), nullable=False)
     
     # Metadata
     created_at = Column(DateTime(timezone=True), server_default=func.now())
