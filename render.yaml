@@ -51,11 +51,9 @@ services:
       - key: NASA_CACHE_TTL
         value: "3600"  # 1 hour
   
-  # Frontend Static Site (Optional - if deploying React separately)
-  - type: web
+  # Frontend Static Site
+  - type: static
     name: echosphere-frontend
-    env: static
-    region: oregon
     plan: free
     
     buildCommand: |
