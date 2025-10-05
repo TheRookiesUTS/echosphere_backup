@@ -52,8 +52,9 @@ services:
         value: "3600"  # 1 hour
   
   # Frontend Static Site
-  - type: static
+  - type: web
     name: echosphere-frontend
+    env: static
     plan: free
     
     buildCommand: |
