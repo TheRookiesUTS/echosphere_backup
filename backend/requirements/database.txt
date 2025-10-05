@@ -12,5 +12,6 @@ shapely>=2.0.0  # Geometry operations and manipulation
 
 # Connection pooling and utilities
 psycopg2>=2.9.9  # PostgreSQL adapter (source version for production)
+asyncpg>=0.29.0  # Async PostgreSQL driver for SQLAlchemy
 greenlet>=3.0.0  # Required by SQLAlchemy for async support
 
