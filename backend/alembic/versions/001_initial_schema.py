@@ -54,7 +54,7 @@ def upgrade() -> None:
         sa.Column('email', sa.String(length=255), nullable=True),
         sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
         sa.Column('last_active', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
-        sa.Column('status', postgresql.ENUM('active', 'inactive', 'expired', name='sessionstatus'), nullable=True),
+        sa.Column('status', postgresql.ENUM('active', 'inactive', 'expired', name='sessionstatus', create_type=False), nullable=True),
         sa.Column('preferences', postgresql.JSON(astext_type=sa.Text()), nullable=True),
         sa.PrimaryKeyConstraint('id')
     )
@@ -92,7 +92,7 @@ def upgrade() -> None:
         sa.Column('precipitation', sa.Float(), nullable=True),
         sa.Column('green_coverage', sa.Float(), nullable=False),
         sa.Column('water_stress', sa.Float(), nullable=True),
-        sa.Column('flood_risk', postgresql.ENUM('Very Low', 'Low', 'Medium', 'High', 'Very High', name='floodrisklevel'), nullable=False),
+        sa.Column('flood_risk', postgresql.ENUM('Very Low', 'Low', 'Medium', 'High', 'Very High', name='floodrisklevel', create_type=False), nullable=False),
         sa.Column('population_estimate', sa.Integer(), nullable=True),
         sa.Column('building_count', sa.Integer(), nullable=True),
         sa.Column('recorded_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
@@ -111,7 +111,7 @@ def upgrade() -> None:
         sa.Column('area_id', sa.Integer(), nullable=False),
         sa.Column('analysis_text', sa.Text(), nullable=False),
         sa.Column('summary', postgresql.JSON(astext_type=sa.Text()), nullable=False),
-        sa.Column('priority_level', postgresql.ENUM('Low', 'Medium', 'High', 'Critical', name='prioritylevel'), nullable=False),
+        sa.Column('priority_level', postgresql.ENUM('Low', 'Medium', 'High', 'Critical', name='prioritylevel', create_type=False), nullable=False),
         sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
         sa.Column('ai_model', sa.String(length=100), nullable=True),
         sa.Column('processing_time_ms', sa.Integer(), nullable=True),
