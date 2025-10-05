@@ -22,14 +22,27 @@ def upgrade() -> None:
     op.execute('CREATE EXTENSION IF NOT EXISTS postgis;')
     
     # Create enum types
+    # Create ENUM types only if they don't exist
     op.execute("""
-        CREATE TYPE floodrisklevel AS ENUM ('Very Low', 'Low', 'Medium', 'High', 'Very High');
+        DO $$ BEGIN
+            IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'floodrisklevel') THEN
+                CREATE TYPE floodrisklevel AS ENUM ('Very Low', 'Low', 'Medium', 'High', 'Very High');
+            END IF;
+        END $$;
     """)
     op.execute("""
-        CREATE TYPE prioritylevel AS ENUM ('Low', 'Medium', 'High', 'Critical');
+        DO $$ BEGIN
+            IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'prioritylevel') THEN
+                CREATE TYPE prioritylevel AS ENUM ('Low', 'Medium', 'High', 'Critical');
+            END IF;
+        END $$;
     """)
     op.execute("""
-        CREATE TYPE sessionstatus AS ENUM ('active', 'inactive', 'expired');
+        DO $$ BEGIN
+            IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'sessionstatus') THEN
+                CREATE TYPE sessionstatus AS ENUM ('active', 'inactive', 'expired');
+            END IF;
+        END $$;
     """)
     
     # Users table
