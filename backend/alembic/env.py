@@ -3,7 +3,7 @@ Alembic environment configuration for EchoSphere
 Handles database migrations with PostGIS support and async compatibility
 """
 from logging.config import fileConfig
-from sqlalchemy import pool
+from sqlalchemy import pool, text
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
@@ -83,7 +83,7 @@ async def run_async_migrations() -> None:
 
     async with connectable.connect() as connection:
         # Enable PostGIS extension before running migrations
-        await connection.execute("CREATE EXTENSION IF NOT EXISTS postgis;")
+        await connection.execute(text("CREATE EXTENSION IF NOT EXISTS postgis;"))
         await connection.commit()
         
         await connection.run_sync(do_run_migrations)
